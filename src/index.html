@@ -49,13 +49,32 @@
             <h2>Converter</h2>
             
             <br>Enter amount: <input type="number" value="100" v-model="start_value">
-            <br>Convert from <input list="currency"  v-model="start_ccy">
-            <datalist id="currency">
-              <option value="USD">
-              <option value="EUR">
-              <option value="RUR">
-            </datalist>
-            to <input list="currency" v-model="end_ccy">
+            <br>Convert from (choose ONE)
+            <table>
+                <tr>
+                    <th>RUB</th>
+                    <th>USD</th>
+                    <th>EUR</th>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" value="RUR" v-model="start_ccy_r"></td>
+                    <td><input type="checkbox" value="USD" v-model="start_ccy_u"></td>
+                    <td><input type="checkbox" value="EUR" v-model="start_ccy_e"></td>
+                </tr>
+            </table>{{start_ccy}}
+            to (choose ONE)
+            <table>
+                <tr>
+                    <th>RUB</th>
+                    <th>USD</th>
+                    <th>EUR</th>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" value="RUR" v-model="end_ccy_r"></td>
+                    <td><input type="checkbox" value="USD" v-model="end_ccy_u"></td>
+                    <td><input type="checkbox" value="EUR" v-model="end_ccy_e"></td>
+                </tr>
+            </table>
             <button v-on:click="convert">Convert</button>
             <br>{{result}}
         </div>
