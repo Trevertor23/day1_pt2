@@ -1,0 +1,30 @@
+{
+  "name": "day1_p2",
+  "version": "1.0.0",
+  "description": "day 1",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack-dev-server --mode development",
+    "build": "webpack --mode production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Trevertor23/day1_pt2.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Trevertor23/day1_pt2/issues"
+  },
+  "homepage": "https://github.com/Trevertor23/day1_pt2#readme",
+  "devDependencies": {
+    "webpack": "^5.59.0",
+    "webpack-cli": "^4.9.1",
+    "webpack-dev-server": "^4.3.1"
+  },
+  "dependencies": {
+    "axios": "^0.23.0",
+    "vue-axios": "^3.3.7",
+    "vue.js": "^0.3.2"
+  }
+}
