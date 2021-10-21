@@ -1,5 +1,6 @@
 <template>
    <div>
+       <h1>Variant 5 (1)</h1>
         <table>
                 <tr>
                     <th>Photo</th>
@@ -14,9 +15,23 @@
                     <td>{{stud.group}}</td>
                     <td>{{stud.mark}}</td>
                     <td><input type="checkbox" v-bind:checked="stud.isDonePr"></td>
+                    <td><a href="#" v-on:click="deleteStudent(stud._id)">Видалити</a></td>
+                    <td><button v-on:click="getData(stud._id,stud.name,stud.group,stud.isDonePr)"><img src="components/Black_pencil.svg" width="25px"></button></td>
                 </tr>
-            </table>
+            </table><h1>{{reload}}</h1>
             <br>Введіть потрібне прізвище: <input v-model="search">
+            <p><h3>Add new student</h3>
+            <br>Input Name: <input v-model="name">
+            <br> input Group: <input v-model="group">
+            <br> Pr Is Done: <input type="checkbox" v-model="isDonePr">
+            <br><button v-on:click="addStudent">Add student</button>
+
+            <p><h3>Update student</h3>
+            <br>Input Name: <input v-model="name1">
+            <br> input Group: <input v-model="group1">
+            <br> Pr Is Done: <input type="checkbox" v-model="isDonePr1">
+            <br><button v-on:click="updateStudent()">Update student</button>
+
 			<hr>
             <h2>Converter</h2>
             
@@ -58,7 +73,15 @@
     import VueAxios from 'vue-axios'
  
    export default {
-        data:{
+        data: function() {
+           return {
+            name:"",
+            group:"",
+            isDonePr:false,
+            name1:"",
+            group1:"",
+            isDonePr1:false,
+            studId:"",
             students: [],
             currency:[],
             search:"",
@@ -75,7 +98,8 @@
             start_value:0,
             end_value:0,
             result:"",
-        },
+            reload:"",
+        }},
         mounted: function(){
             axios.get("http://46.101.212.195:3000/students").then((response)=>{
                 console.log(response.data);
@@ -85,10 +109,48 @@
                 console.log(response.data);
                 this.currency = response.data;
             })
+            
         },
         methods:{
-        deleteRow:function(id){
-                this.students =  this.students.filter(stud => stud.id!=id)
+        
+        addStudent:function(){
+            Vue.axios.post("http://46.101.212.195:3000/students", {
+                name: this.name,
+                group: this.group,
+                isDonePr: this.isDonePr,
+            })
+            .then((response) => {
+                console.log(response.data)
+            })
+            axios.get("http://46.101.212.195:3000/students").then((response)=>{
+                this.students = response.data;
+            })
+            this.reload = "RELOAD THE PAGE!";
+        },
+        deleteStudent:function(id){
+            Vue.axios.delete("http://46.101.212.195:3000/students/"+id, {
+            })
+            axios.get("http://46.101.212.195:3000/students").then((response)=>{
+                this.students = response.data;
+            })
+            this.reload = "RELOAD THE PAGE!";
+        },
+        getData: function(id,name,group,isDone){
+            this.studId = id;
+            this.name1 = name;
+            this.group1 = group;
+            this.isDonePr1 = isDone;
+        },
+        updateStudent:function(){
+            Vue.axios.put("http://46.101.212.195:3000/students/"+this.studId, {
+                 name: this.name1,
+                group: this.group1,
+                isDonePr: this.isDonePr1,
+            })
+            axios.get("http://46.101.212.195:3000/students").then((response)=>{
+                this.students = response.data;
+            })
+            this.reload = "RELOAD THE PAGE!";
         },
         convert:function(){
             if(this.start_ccy_e==true) this.start_ccy = "EUR"
