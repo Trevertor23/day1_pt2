@@ -10,75 +10,10 @@
         </style>
     </head>
     <body>
-        <div id = "z1">
-           <!-- <table>
-                <tr>
-                    <th>ID</th>
-                    <th>ПІБ</th>
-                    <th>Група</th>
-                    <th>Рік народження</th>
-                    <th>Здав пр-ку</th>
-                </tr>
-                <tr v-for="stud in students">
-                    <td>{{stud.id}}</td>
-                    <td v-bind:style="stud.PIB.indexOf(search)>-1 && search.length >0 ? 'background-color:#CA2C2C' : 'background-color:#fff'">{{stud.PIB}}</td>
-                    <td>{{stud.group}}</td>
-                    <td>{{stud.yearofbirth}}</td>
-                    <td><input type="checkbox" v-bind:checked="stud.zdav"></td>
-                    <td><a href="#" v-on:click="deleteRow(stud.id)">Видалити</a></td>
-                </tr>
-            </table>-->
-            <table>
-                <tr>
-                    <th>Photo</th>
-                    <th>Name</th>
-                    <th>Group</th>
-                    <th>Mark</th>
-                    <th>PR is Done</th>
-                </tr>
-                <tr v-for="stud in students">
-                    <td><img v-bind:src="stud.photo" width="50px"></td>
-                    <td v-bind:style="stud.name.indexOf(search)>-1 && search.length >0 ? 'background-color:#CA2C2C' : 'background-color:#fff'">{{stud.name}}</td>
-                    <td>{{stud.group}}</td>
-                    <td>{{stud.mark}}</td>
-                    <td><input type="checkbox" v-bind:checked="stud.isDonePr"></td>
-                </tr>
-            </table>
-            <br>Введіть потрібне прізвище: <input v-model="search">
-			<hr>
-            <h2>Converter</h2>
-            
-            <br>Enter amount: <input type="number" value="100" v-model="start_value">
-            <br>Convert from (choose ONE)
-            <table>
-                <tr>
-                    <th>RUB</th>
-                    <th>USD</th>
-                    <th>EUR</th>
-                </tr>
-                <tr>
-                    <td><input type="checkbox" value="RUR" v-model="start_ccy_r"></td>
-                    <td><input type="checkbox" value="USD" v-model="start_ccy_u"></td>
-                    <td><input type="checkbox" value="EUR" v-model="start_ccy_e"></td>
-                </tr>
-            </table>{{start_ccy}}
-            to (choose ONE)
-            <table>
-                <tr>
-                    <th>RUB</th>
-                    <th>USD</th>
-                    <th>EUR</th>
-                </tr>
-                <tr>
-                    <td><input type="checkbox" value="RUR" v-model="end_ccy_r"></td>
-                    <td><input type="checkbox" value="USD" v-model="end_ccy_u"></td>
-                    <td><input type="checkbox" value="EUR" v-model="end_ccy_e"></td>
-                </tr>
-            </table>
-            <button v-on:click="convert">Convert</button>
-            <br>{{result}}
+        <div id = "app">
+           
         </div>
        
-        <script src="main.js"></script>
+        
     </body>
 </html>
