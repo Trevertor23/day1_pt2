@@ -1,5 +1,8 @@
 <template>
    <div>
+        <link rel="stylesheet" id="theme" v-bind:href="chosenTheme == 'light' ? './theme1.css' : './theme2.css'">
+       <input type="radio" name="theme_r" value="light" v-on:click="choseTheme('light')">Light<br>
+        <input type="radio" name="theme_r" value="dark" v-on:click="choseTheme('dark')">Dark
        <div v-if="zoom" style="width: 100%;height:100%; background: rgba(0, 0, 0, 0.4);position:fixed;">
                     <div v-if="zoom">
                         <div style="display:flex;margin-top:15%;justify-content:center;">
@@ -9,7 +12,7 @@
                     </div>
                     </div>
        <h1>Variant 5 (1)</h1>
-                    
+        Students count - {{studentsCount}}            
         <table>
                 <tr>
                     <th>Photo</th>
@@ -132,6 +135,7 @@
                 axios.get("http://46.101.212.195:3000/students").then((response)=>{
                     console.log(response.data);
                     this.students = response.data;
+                    this.$store.commit('setCount',this.students.length);
                 })
                 axios.get("https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5").then((response)=>{
                     console.log(response.data);
@@ -140,6 +144,9 @@
             
         },
         methods:{
+            choseTheme: function(theme){
+                this.$store.commit('setTheme', theme);
+            },
             zoomImage: function(photo){
                 this.photoId = photo;
                 this.zoom = true;
@@ -212,7 +219,16 @@
             roundValue: function(value){
                 return parseFloat(value.toFixed(2));
             },
+        },
+        computed: {
+            studentsCount () {
+                return this.$store.getters.getCount
+            },
+            chosenTheme(){
+                return this.$store.getters.getTheme
+            },
         }
+
     }
 </script>
 <style scoped>

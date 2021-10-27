@@ -28,6 +28,8 @@
     "vue-loader": "^15.9.8",
     "vue-router": "^3.5.2",
     "vue-template-compiler": "^2.6.14",
-    "vue.js": "^0.3.2"
+    "vue.js": "^0.3.2",
+    "vuex": "^3.6.2",
+    "vuex-persistedstate": "^4.1.0"
   }
 }
