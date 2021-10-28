@@ -12,7 +12,8 @@
                     </div>
                     </div>
        <h1>Variant 5 (1)</h1>
-        Students count - {{studentsCount}}            
+        Students count - {{studentsCount}}   
+        <br><button v-on:click="logout">Log out</button>         
         <table>
                 <tr>
                     <th>Photo</th>
@@ -33,7 +34,7 @@
                     <td>{{stud.group}}</td>
                     <td>{{stud.mark}}</td>
                     <td><input type="checkbox" v-bind:checked="stud.isDonePr"></td>
-                    <td><a href="#" v-on:click="deleteStudent(stud._id)">Видалити</a></td>
+                    <td><a href="#" v-on:click.prevent="deleteStudent(stud._id)" v-show="stud.group==getCurrentUser.group">Видалити</a></td>
                     <td><button v-on:click="getData(stud._id,stud.name,stud.group,stud.isDonePr)"><img src="components/Black_pencil.svg" width="25px"></button></td>
                 </tr>
             </table><h1>{{reload}}</h1>
@@ -130,13 +131,13 @@
             photoId:"",
             zoom:false,
         }},
-        mounted: function(){
+        mounted: async function(){
             
-                axios.get("http://46.101.212.195:3000/students").then((response)=>{
+                let response = await axios.get("http://46.101.212.195:3000/students")
                     console.log(response.data);
                     this.students = response.data;
                     this.$store.commit('setCount',this.students.length);
-                })
+                
                 axios.get("https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5").then((response)=>{
                     console.log(response.data);
                     this.currency = response.data;
@@ -144,6 +145,10 @@
             
         },
         methods:{
+            logout: function() {
+                this.$store.commit('deleteUser');
+                this.$router.push('login');
+            },
             choseTheme: function(theme){
                 this.$store.commit('setTheme', theme);
             },
@@ -171,9 +176,12 @@
             deleteStudent:function(id){
                 Vue.axios.delete("http://46.101.212.195:3000/students/"+id, {
                 })
-                this.reload = "";
-                let i = this.students.indexOf(id);
-                this.students.splice(i,1)
+                .then((response)=>{
+                    let i = this.students.indexOf(id);
+                    this.students.splice(i,1);
+                    this.$store.commit('setCount',this.students.length);
+                })
+                
             },
             getData: function(id,name,group,isDone){
                 this.newStudent.id = id;
@@ -227,7 +235,10 @@
             chosenTheme(){
                 return this.$store.getters.getTheme
             },
-        }
+            getCurrentUser () {
+                return this.$store.getters.getUser
+            }
+        },
 
     }
 </script>
